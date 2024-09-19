@@ -1,0 +1,17 @@
+.data-table-container {
+  margin-top: 20px;
+}
+
+.data-table-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table-container th, .data-table-container td {
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+.data-table-container th {
+  background-color: #f4f4f4;
+}

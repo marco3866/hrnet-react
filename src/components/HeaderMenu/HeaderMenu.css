@@ -1,0 +1,26 @@
+.header-menu {
+  background-color: #282c34;
+  padding: 20px;
+  text-align: center;
+}
+
+.header-menu nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.header-menu nav ul li {
+  display: inline;
+  margin-right: 15px;
+}
+
+.header-menu nav ul li a {
+  color: #61dafb;
+  text-decoration: none;
+  font-size: 18px;
+}
+
+.header-menu nav ul li a:hover {
+  text-decoration: underline;
+}
