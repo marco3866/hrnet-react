@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import DatePickerComponent from '../../components/DatePickerComponent/DatePickerComponent';
 import SelectMenuComponent from '../../components/SelectMenuComponent/SelectMenuComponent';
 import ConfirmationModal from '../../components/ConfirmationModal/ConfirmationModal';
+// Importer votre plugin datepicker
+import DatePicker from 'my-datepicker-plugin';
 import './FormComponent.css';
 
 const FormComponent = ({ onSubmit }) => {
@@ -12,7 +13,7 @@ const FormComponent = ({ onSubmit }) => {
   const [selectedDepartment, setSelectedDepartment] = useState('');
   const [selectedState, setSelectedState] = useState('');
   const [errors, setErrors] = useState({});
-  const [showErrorModal, setShowErrorModal] = useState(false); // État pour gérer la popup d'erreur
+  const [showErrorModal, setShowErrorModal] = useState(false);
 
   // Charger les départements
   useEffect(() => {
@@ -60,18 +61,18 @@ const FormComponent = ({ onSubmit }) => {
       street: e.target['street'].value,
       city: e.target['city'].value,
       state: selectedState,
-      zipCode: e.target['zip-code'].value
+      zipCode: e.target['zip-code'].value,
     };
 
     if (validateForm(employeeData)) {
-      onSubmit(employeeData); // Si le formulaire est valide, soumettre les données
+      onSubmit(employeeData);
     } else {
-      setShowErrorModal(true); // Afficher la popup si le formulaire n'est pas valide
+      setShowErrorModal(true);
     }
   };
 
   const closeModal = () => {
-    setShowErrorModal(false); // Fermer la popup d'erreur
+    setShowErrorModal(false);
   };
 
   return (
@@ -80,22 +81,22 @@ const FormComponent = ({ onSubmit }) => {
         {/* First Name */}
         <label htmlFor="first-name">First Name</label>
         <input type="text" id="first-name" />
-        {errors.firstName && <p className="error">{errors.firstName}</p>} {/* Affiche l'erreur */}
+        {errors.firstName && <p className="error">{errors.firstName}</p>}
 
         {/* Last Name */}
         <label htmlFor="last-name">Last Name</label>
         <input type="text" id="last-name" />
-        {errors.lastName && <p className="error">{errors.lastName}</p>} {/* Affiche l'erreur */}
+        {errors.lastName && <p className="error">{errors.lastName}</p>}
 
         {/* Date of Birth */}
-        <DatePickerComponent
+        <DatePicker
           label="Date of Birth"
           selectedDate={dateOfBirth}
           onChange={setDateOfBirth}
         />
 
         {/* Start Date */}
-        <DatePickerComponent
+        <DatePicker
           label="Start Date"
           selectedDate={startDate}
           onChange={setStartDate}
@@ -107,11 +108,11 @@ const FormComponent = ({ onSubmit }) => {
 
           <label htmlFor="street">Street</label>
           <input type="text" id="street" />
-          {errors.street && <p className="error">{errors.street}</p>} {/* Affiche l'erreur */}
+          {errors.street && <p className="error">{errors.street}</p>}
 
           <label htmlFor="city">City</label>
           <input type="text" id="city" />
-          {errors.city && <p className="error">{errors.city}</p>} {/* Affiche l'erreur */}
+          {errors.city && <p className="error">{errors.city}</p>}
 
           <SelectMenuComponent
             label="State"
@@ -122,7 +123,7 @@ const FormComponent = ({ onSubmit }) => {
 
           <label htmlFor="zip-code">Zip Code</label>
           <input type="number" id="zip-code" />
-          {errors.zipCode && <p className="error">{errors.zipCode}</p>} {/* Affiche l'erreur */}
+          {errors.zipCode && <p className="error">{errors.zipCode}</p>}
         </fieldset>
 
         {/* Department */}
@@ -136,7 +137,6 @@ const FormComponent = ({ onSubmit }) => {
         <button type="submit">Save</button>
       </form>
 
-      {/* Modale d'erreur */}
       {showErrorModal && (
         <ConfirmationModal
           message="Certaines informations sont manquantes. Veuillez remplir tous les champs obligatoires."
