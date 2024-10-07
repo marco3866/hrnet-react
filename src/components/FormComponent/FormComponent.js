@@ -88,19 +88,19 @@ const FormComponent = ({ onSubmit }) => {
         <input type="text" id="last-name" />
         {errors.lastName && <p className="error">{errors.lastName}</p>}
 
-        {/* Date of Birth */}
-        <DatePicker
-          label="Date of Birth"
-          selectedDate={dateOfBirth}
-          onChange={setDateOfBirth}
-        />
-
-        {/* Start Date */}
-        <DatePicker
-          label="Start Date"
-          selectedDate={startDate}
-          onChange={setStartDate}
-        />
+        {/* Champs pour les dates */}
+        <div className="date-row">
+          <DatePicker
+            label="Date of Birth"
+            selectedDate={dateOfBirth}
+            onChange={setDateOfBirth}
+          />
+          <DatePicker
+            label="Start Date"
+            selectedDate={startDate}
+            onChange={setStartDate}
+          />
+        </div>
 
         {/* Address Fields */}
         <fieldset className="address">

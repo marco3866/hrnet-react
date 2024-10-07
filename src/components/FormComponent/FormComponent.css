@@ -1,6 +1,64 @@
 .error {
-    color: red;
-    font-size: 14px;
-    margin-top: 5px;
-  }
-  
+  color: red;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* Centrer le formulaire */
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 900px; /* Largeur maximale du formulaire */
+  margin: 0 auto; /* Centre le formulaire horizontalement */
+}
+
+/* Aligner les champs de date sur la même ligne et ajouter de l'espace entre eux */
+.date-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px; /* Ajoute un espace entre les deux champs de date */
+  width: 100%; /* S'assure que les champs prennent toute la largeur disponible */
+  max-width: 900px; /* Largeur maximale */
+}
+
+/* Ajoute un espacement et centre les champs du DatePicker */
+.datepicker-container {
+  margin-bottom: 20px;
+  flex: 1; /* Permet de garder les deux champs sur la même ligne */
+}
+
+/* Styles généraux pour les champs d'entrée */
+input[type="text"], input[type="number"], .datepicker-input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+/* Aligner le champ du select menu pour qu'il prenne toute la largeur */
+.select-menu {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+/* Champ du département et état alignés et espacés */
+fieldset.address, .select-menu-component {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 900px; /* Largeur maximale pour chaque section du formulaire */
+}
+
+button[type="submit"] {
+  width: 100%;
+  max-width: 900px;
+  padding: 15px;
+  background-color: blue;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+}

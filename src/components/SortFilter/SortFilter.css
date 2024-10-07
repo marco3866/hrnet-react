@@ -1,0 +1,15 @@
+/* src/components/SortFilter/SortFilter.css */
+.sort-filter {
+  margin-left: 0; /* Aligner à gauche */
+  display: flex;
+  align-items: center;
+}
+
+.sort-filter label {
+  margin-right: 10px;
+}
+
+.sort-filter select {
+  padding: 5px;
+  border-radius: 4px;
+}
