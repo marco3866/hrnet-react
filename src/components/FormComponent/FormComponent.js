@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import SelectMenuComponent from '../../components/SelectMenuComponent/SelectMenuComponent';
-import ConfirmationModal from '../../components/ConfirmationModal/ConfirmationModal';
-// Importer votre plugin datepicker
-import DatePicker from 'my-datepicker-plugin';
-import './FormComponent.css';
+import SelectMenuComponent from '../../components/SelectMenuComponent/SelectMenuComponent'; // Importation du composant de sélection
+import ConfirmationModal from '../../components/ConfirmationModal/ConfirmationModal'; // Importation de la modale de confirmation
+import DatePicker from 'my-datepicker-plugin'; // Importation de votre plugin personnalisé
+import './FormComponent.css'; // Importation du fichier CSS pour ce composant
 
+/**
+ * Composant Formulaire pour créer un employé
+ * 
+ * @param {function} onSubmit - Fonction appelée lors de la soumission du formulaire
+ */
 const FormComponent = ({ onSubmit }) => {
+  // États pour gérer les données du formulaire
   const [dateOfBirth, setDateOfBirth] = useState(new Date());
   const [startDate, setStartDate] = useState(new Date());
   const [departments, setDepartments] = useState([]);
@@ -13,28 +18,29 @@ const FormComponent = ({ onSubmit }) => {
   const [selectedDepartment, setSelectedDepartment] = useState('');
   const [selectedState, setSelectedState] = useState('');
   const [errors, setErrors] = useState({});
-  const [showErrorModal, setShowErrorModal] = useState(false);
+  const [showErrorModal, setShowErrorModal] = useState(false); // État pour afficher ou non la modale d'erreur
 
-  // Charger les départements
+  // Charger les départements depuis un fichier JSON
   useEffect(() => {
-    fetch('/Data/departments.json')
+    fetch('/Data/departments.json') // Appel pour charger les départements
       .then((response) => response.json())
       .then((data) => {
-        setDepartments(data);
-        setSelectedDepartment(data[0]);
+        setDepartments(data); // Mise à jour de l'état des départements
+        setSelectedDepartment(data[0]); // Sélection du premier département par défaut
       });
   }, []);
 
-  // Charger les états
+  // Charger les états depuis un fichier JSON
   useEffect(() => {
-    fetch('/Data/states.json')
+    fetch('/Data/states.json') // Appel pour charger les états (provinces/régions)
       .then((response) => response.json())
       .then((data) => {
-        setStates(data);
-        setSelectedState(data[0].abbreviation);
+        setStates(data); // Mise à jour de l'état des états
+        setSelectedState(data[0].abbreviation); // Sélection du premier état par défaut
       });
   }, []);
 
+  // Validation du formulaire
   const validateForm = (formData) => {
     const newErrors = {};
 
@@ -44,11 +50,12 @@ const FormComponent = ({ onSubmit }) => {
     if (!formData.city) newErrors.city = 'City is required';
     if (!formData.zipCode) newErrors.zipCode = 'Zip Code is required';
 
-    setErrors(newErrors);
+    setErrors(newErrors); // Mise à jour des erreurs
 
-    return Object.keys(newErrors).length === 0;
+    return Object.keys(newErrors).length === 0; // Retourne vrai si aucune erreur
   };
 
+  // Gestion de la soumission du formulaire
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -64,13 +71,15 @@ const FormComponent = ({ onSubmit }) => {
       zipCode: e.target['zip-code'].value,
     };
 
+    // Validation et envoi des données
     if (validateForm(employeeData)) {
-      onSubmit(employeeData);
+      onSubmit(employeeData); // Envoi des données si valide
     } else {
-      setShowErrorModal(true);
+      setShowErrorModal(true); // Afficher la modale si des erreurs sont présentes
     }
   };
 
+  // Fonction pour fermer la modale d'erreur
   const closeModal = () => {
     setShowErrorModal(false);
   };
@@ -81,28 +90,28 @@ const FormComponent = ({ onSubmit }) => {
         {/* First Name */}
         <label htmlFor="first-name">First Name</label>
         <input type="text" id="first-name" />
-        {errors.firstName && <p className="error">{errors.firstName}</p>}
+        {errors.firstName && <p className="error">{errors.firstName}</p>} {/* Affichage de l'erreur si elle existe */}
 
         {/* Last Name */}
         <label htmlFor="last-name">Last Name</label>
         <input type="text" id="last-name" />
-        {errors.lastName && <p className="error">{errors.lastName}</p>}
+        {errors.lastName && <p className="error">{errors.lastName}</p>} {/* Affichage de l'erreur */}
 
         {/* Champs pour les dates */}
         <div className="date-row">
           <DatePicker
             label="Date of Birth"
             selectedDate={dateOfBirth}
-            onChange={setDateOfBirth}
+            onChange={setDateOfBirth} // Fonction pour mettre à jour la date de naissance
           />
           <DatePicker
             label="Start Date"
             selectedDate={startDate}
-            onChange={setStartDate}
+            onChange={setStartDate} // Fonction pour mettre à jour la date de début
           />
         </div>
 
-        {/* Address Fields */}
+        {/* Champs d'adresse */}
         <fieldset className="address">
           <legend>Address</legend>
 
@@ -116,9 +125,9 @@ const FormComponent = ({ onSubmit }) => {
 
           <SelectMenuComponent
             label="State"
-            options={states.map((state) => state.name)}
+            options={states.map((state) => state.name)} // Options provenant de l'état 'states'
             value={selectedState}
-            onChange={(e) => setSelectedState(e.target.value)}
+            onChange={(e) => setSelectedState(e.target.value)} // Fonction pour mettre à jour l'état sélectionné
           />
 
           <label htmlFor="zip-code">Zip Code</label>
@@ -126,21 +135,23 @@ const FormComponent = ({ onSubmit }) => {
           {errors.zipCode && <p className="error">{errors.zipCode}</p>}
         </fieldset>
 
-        {/* Department */}
+        {/* Département */}
         <SelectMenuComponent
           label="Department"
-          options={departments}
+          options={departments} // Options provenant de l'état 'departments'
           value={selectedDepartment}
-          onChange={(e) => setSelectedDepartment(e.target.value)}
+          onChange={(e) => setSelectedDepartment(e.target.value)} // Fonction pour mettre à jour le département sélectionné
         />
 
+        {/* Bouton pour soumettre */}
         <button type="submit">Save</button>
       </form>
 
+      {/* Affichage de la modale d'erreur si nécessaire */}
       {showErrorModal && (
         <ConfirmationModal
           message="Certaines informations sont manquantes. Veuillez remplir tous les champs obligatoires."
-          onClose={closeModal}
+          onClose={closeModal} // Fonction pour fermer la modale
         />
       )}
     </>
